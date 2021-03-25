@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "clean:all": "yarn clean:node-modules && yarn clean:expo-cache",
+    "clean:node-modules": "rimraf node_modules packages/*/node_modules",
+    "clean:expo-cache": "rimraf packages/*/.expo",
+    "format": "prettier --write --ignore-path .gitignore packages/**",
+    "user": "yarn workspace @ae/ae-user run start",
+    "ui": "yarn workspace @ae/ui run storybook"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2"
+  },
+  "resolutions": {
+    "react": "16.9.0",
+    "react-dom": "16.9.0"
+  }
+}
