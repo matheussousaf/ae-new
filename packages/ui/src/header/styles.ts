@@ -12,6 +12,7 @@ export const Container = styled.View<HeaderProps>`
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
+  padding: 10px;
 `;
 
 export const Title = styled.Text`

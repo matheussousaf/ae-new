@@ -9,7 +9,12 @@ interface ButtonProps {
 
 export default function PrimaryButton({ title, onPress, width }: ButtonProps) {
   return (
-    <Container style={{ elevation: 3 }} activeOpacity={0.9} width={width}>
+    <Container
+      onPress={onPress}
+      style={{ elevation: 3 }}
+      activeOpacity={0.9}
+      width={width}
+    >
       <Title>{title}</Title>
     </Container>
   );

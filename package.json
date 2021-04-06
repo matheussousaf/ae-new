@@ -8,8 +8,8 @@
     "clean:node-modules": "rimraf node_modules packages/*/node_modules",
     "clean:expo-cache": "rimraf packages/*/.expo",
     "format": "prettier --write --ignore-path .gitignore packages/**",
-    "user": "yarn workspace @ae/ae-user run start",
-    "ui": "yarn workspace @ae/ui run storybook"
+    "run:deliver": "yarn workspace @ae/ae-deliver run start",
+    "run:ui": "yarn workspace @ae/ui run storybook"
   },
   "devDependencies": {
     "prettier": "^2.0.5",

@@ -10,11 +10,16 @@ export const Fonts = {
   },
 };
 
+type Sizes = "xsm" | "sm" | "md" | "xmd" | "lg" | "xlg";
+
 export const FontSizes = {
-  xsm: 10,
+  toPixel: (size: Sizes) => {
+    return FontSizes[size] + "px";
+  },
+  xsm: 12,
   sm: 14,
   md: 16,
   xmd: 18,
   lg: 22,
-  xlg: 24
-}
+  xlg: 24,
+};
