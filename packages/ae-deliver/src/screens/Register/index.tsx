@@ -28,7 +28,7 @@ const Register: React.FC = () => {
             name: "phone",
             initialValue: "",
             placeholder: "Telefone",
-            mask: "000.000.000-00"
+            mask: "999.999.999-99"
           },
         ]}
         button={{ title: "Próxima Etapa" }}
