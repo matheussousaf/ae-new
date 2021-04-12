@@ -5,7 +5,9 @@
   "devDependencies": {
     "@babel/core": "^7.10.1",
     "@expo/webpack-config": "^0.12.11",
+    "@storybook/addons": "^6.2.5",
     "@storybook/react": "^6.1.21",
+    "@storybook/theming": "^6.2.5",
     "@types/styled-components": "^5.1.9",
     "@types/styled-components-react-native": "^5.1.1",
     "@types/yup": "^0.29.11",

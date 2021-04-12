@@ -1,9 +1,9 @@
 import React from "react";
 import { Container, Title } from "./styles";
+import { TouchableOpacityProps } from "react-native";
 
-interface ButtonProps {
+interface ButtonProps extends TouchableOpacityProps {
   title: string;
-  onPress?: () => void;
   width?: string;
 }
 

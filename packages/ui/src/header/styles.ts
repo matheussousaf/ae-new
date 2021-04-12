@@ -14,7 +14,8 @@ export const Container = styled.View<HeaderProps>`
   flex-direction: row;
   padding: 10px;
   background: white;
-  height: ${Platform.OS === "ios" ? "120px" : "100px"};
+  height: 100px;
+  width: 100%;
 `;
 
 export const Title = styled.Text`
@@ -24,9 +25,15 @@ export const Title = styled.Text`
   font-family: ${Fonts.secondary.regular};
   text-align: center;
   text-transform: uppercase;
-  margin-left: -30px;
+  margin-left: -20px;
 `;
 
-export const IconContainer = styled.View`
-  margin-left: 30px;
+export const IconContainer = styled.TouchableOpacity`
+  margin-left: 20px;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

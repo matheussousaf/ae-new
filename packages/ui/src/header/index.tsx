@@ -3,7 +3,7 @@ import { Container, Title, IconContainer } from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import { FontSizes } from "../typography/fonts";
 import { Colors } from "../colors/colors";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 interface HeaderProps {
   title: string;
@@ -17,7 +17,7 @@ export default function Header({ title, onBackPress }: HeaderProps) {
 
   return (
     <Container>
-      <IconContainer>
+      <IconContainer activeOpacity={0.8} onPress={onBackPress} >
         <Ionicons
           style={{ left: 0 }}
           name="ios-arrow-back"

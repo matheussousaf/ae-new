@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import Animated from "react-native-reanimated";
 
 const { Value } = Animated;
@@ -18,3 +19,27 @@ export function repeat(text: string, times: number): string {
 }
 
 export const useValue = (amount: number) => new Value(amount);
+
+export const useStateWithPromise = (initialState) => {
+  const [state, setState] = useState(initialState);
+  const resolverRef = useRef(null);
+
+  useEffect(() => {
+    if (resolverRef.current) {
+      resolverRef.current(state);
+      resolverRef.current = null;
+    }
+  }, [resolverRef.current, state]);
+
+  const handleSetState = useCallback(
+    (stateAction) => {
+      setState(stateAction);
+      return new Promise((resolve) => {
+        resolverRef.current = resolve;
+      });
+    },
+    [setState]
+  );
+
+  return [state, handleSetState];
+};

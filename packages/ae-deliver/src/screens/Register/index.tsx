@@ -1,52 +1,72 @@
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
-import { Input, Form } from "@ae/ui";
+import { Form, Multiform } from "@ae/ui";
 import * as Yup from "yup";
 
 import { signIn } from "@services/auth";
 
+interface Test {
+  nextStep: () => void;
+  previousStep: () => void;
+}
+
 const Register: React.FC = () => {
-  const validationSchema = Yup.object().shape({
+  const validationSchema = Yup.object({
     email: Yup.string().required("Email is required"),
-    cpf: Yup.string().required("CPF Obrigatório")
+    phone: Yup.string().required("Telefone Obrigatório"),
   });
 
-  return (
-    <View style={styles.container}>
+  function FormExample({ onNextPress }: any) {
+    return (
       <Form
-        validationSchema={validationSchema}
-        onSubmit={(values) => {
+        validationSchema={() => validationSchema}
+        onSubmit={(values: any) => {
           console.log("Submitted:", values);
+          onNextPress();
         }}
         fields={[
           {
-            name: "name",
+            name: "email",
             initialValue: "",
-            placeholder: "Nome completo",
+            placeholder: "Nomes completo",
           },
           {
             name: "phone",
             initialValue: "",
             placeholder: "Telefone",
-            mask: "999.999.999-99"
+            mask: "999.999.999-99",
           },
         ]}
         button={{ title: "Próxima Etapa" }}
       />
-    </View>
+    );
+  }
+
+  function FormExample2({ onNextPress }: any) {
+    return (
+      <Form
+        validationSchema={() => validationSchema}
+        onSubmit={(values: any) => {
+          console.log("Submitted:", values);
+          onNextPress();
+        }}
+        fields={[
+          {
+            name: "email",
+            initialValue: "",
+            placeholder: "Nomes completo",
+          },
+        ]}
+        button={{ title: "Próxima Etapa" }}
+      />
+    );
+  }
+
+  return (
+    <Multiform>
+      <FormExample />
+      <FormExample2 />
+    </Multiform>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: "#fff",
-  },
-  text: {
-    fontSize: 30,
-    color: "#000",
-  },
-});
 
 export default Register;
