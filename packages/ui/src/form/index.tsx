@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { repeat } from "../utils/index";
 import Input from "../input";
 import PrimaryButton from "../buttons/primary";
-import * as Yup from "yup";
+
 
 import { Container, InputsContainer } from "./styles";
 
