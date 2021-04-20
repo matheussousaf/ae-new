@@ -10,6 +10,7 @@ web-build
 node_modules
 npm-debug.log
 yarn-error.log
+yarn.lock
 
 # Ruby
 .direnv
@@ -137,3 +138,4 @@ docs/pages/versions/*/react-native/*.diff
 
 # Pods
 /ios/Pods
+
