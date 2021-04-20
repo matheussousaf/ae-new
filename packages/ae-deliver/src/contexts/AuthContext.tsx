@@ -4,6 +4,8 @@ import { View } from "react-native";
 
 interface AuthContextProps {}
 
+interface User {}
+
 const initialData: AuthContextProps = {};
 
 export const AuthContext = createContext({} as AuthContextProps);

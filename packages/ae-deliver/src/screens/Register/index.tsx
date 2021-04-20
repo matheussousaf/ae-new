@@ -59,7 +59,7 @@ const Register: React.FC = () => {
     );
   }
 
-  function FormCadastro2({ onNextPress }: any) {
+  function FormExample2({ onNextPress }: any) {
     return (
       <Form
         validationSchema={() => secondValidationScheam}
