@@ -19,6 +19,9 @@ export const Multiform = ({ children }) => {
   const growAnimation = useRef(
     useValue(Dimensions.get("window").width / totalSteps)
   ).current;
+
+  const tX = useValue(-375);
+ 
   const slideAnimation = useRef(useValue(0)).current;
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -74,6 +77,7 @@ export const Multiform = ({ children }) => {
   return (
     <Container>
       <Header title="Cadastro" onBackPress={previousStep} />
+      
       <ComponentsContainer
         size={totalSteps}
         /**

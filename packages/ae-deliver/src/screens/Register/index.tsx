@@ -11,8 +11,13 @@ const Register: React.FC = () => {
   const { createAlert, dismissAlert } = useAlert();
 
   const validationSchema = Yup.object({
-    email: Yup.string().required("Email is required"),
-    phone: Yup.string().required("Telefone Obrigatório"),
+    nome: Yup.string().required("Nome Completo Obrigatório"),
+    phone: Yup.string().required("CPF Obrigatório"),
+    // Implement on specific screen.
+    // dataNasc: Yup.string().required("Data Obrigatoria").test('Dia/Mes/Ano', 'Necessário idade acima de 18 anos', function(value) {
+    //   var dateParts = value.split("/");
+    //   return differenceInYears(new Date(), new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0])) >= 18;
+    // }),
   });
 
   const secondValidationScheam = Yup.object({
@@ -29,9 +34,9 @@ const Register: React.FC = () => {
         }}
         fields={[
           {
-            name: "email",
+            name: "nome",
             initialValue: "",
-            placeholder: "Nomes completo",
+            placeholder: "Nome Completo",
           },
           {
             name: "phone",
@@ -42,13 +47,19 @@ const Register: React.FC = () => {
             maxLenght: 15,
             isPassword: true,
           },
+          {
+            name: "dataNasc",
+            initialValue: "",
+            placeholder: "Data de Nascimento",
+            mask: "99/99/9999",
+          },
         ]}
         button={{ title: "Próxima Etapa" }}
       />
     );
   }
 
-  function FormExample2({ onNextPress }: any) {
+  function FormCadastro2({ onNextPress }: any) {
     return (
       <Form
         validationSchema={() => secondValidationScheam}
@@ -60,7 +71,13 @@ const Register: React.FC = () => {
           {
             name: "name",
             initialValue: "",
-            placeholder: "Nomes completo",
+            placeholder: "Email",
+          },
+          {
+            name: "celular",
+            initialValue: "",
+            placeholder: "Celular",
+            mask: "+55 (99) 99999-9999",
           },
         ]}
         button={{ title: "Concluir" }}
