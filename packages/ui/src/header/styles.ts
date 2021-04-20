@@ -13,19 +13,22 @@ export const Container = styled.View<HeaderProps>`
   justify-content: space-between;
   flex-direction: row;
   padding: 10px;
-  background: white;
+  background: ${Colors.light};
+  flex: 0 0 10%;
   height: 100px;
   width: 100%;
 `;
 
 export const Title = styled.Text`
   color: ${Colors.primary};
-  justify-content: flex-start;
   font-size: ${FontSizes.sm + "px"};
   font-family: ${Fonts.secondary.regular};
-  text-align: center;
   text-transform: uppercase;
-  margin-left: -20px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
 `;
 
 export const IconContainer = styled.TouchableOpacity`

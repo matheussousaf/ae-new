@@ -22,9 +22,13 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
+    "add": "^2.0.6",
     "formik": "^2.2.6",
+    "react-native-confirmation-code-field": "^7.0.1",
+    "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-masked-text": "^1.13.0",
     "react-native-reanimated": "~1.7.0",
+    "yarn": "^1.22.10",
     "yup": "^0.32.9"
   }
 }

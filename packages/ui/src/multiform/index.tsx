@@ -4,7 +4,7 @@ import { ComponentsContainer, Container, ProgressBar } from "./styles";
 import Page from "./page/index";
 import Animated, { Easing } from "react-native-reanimated";
 import { useValue } from "../utils";
-import { Text, Dimensions } from "react-native";
+import { Dimensions, BackHandler, Keyboard } from "react-native";
 import Header from "../header";
 
 const { timing } = Animated;
@@ -26,12 +26,14 @@ export const Multiform = ({ children }) => {
   function nextStep() {
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
+      Keyboard.dismiss();
     }
   }
-
+  
   function previousStep() {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+      Keyboard.dismiss();
     }
   }
 
@@ -51,18 +53,35 @@ export const Multiform = ({ children }) => {
       duration: 300,
       easing: Easing.inOut(Easing.circle),
     }).start();
-  }, [currentStep]);
 
+    const backAction = () => {
+      console.log(currentStep);
+      if (currentStep === 1) {
+        return false;
+      }
+      previousStep();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [currentStep]);
 
   return (
     <Container>
       <Header title="Cadastro" onBackPress={previousStep} />
       <ComponentsContainer
         size={totalSteps}
-        style={{ translateX: slideAnimation }}
+        /**
+         //@ts-ignore */
+        style={{ transform: [{ translateX: slideAnimation }] }}
       >
         {subComponents.map((component, index) => {
-          return <Page  key={index} content={component} />;
+          return <Page key={index} content={component} />;
         })}
       </ComponentsContainer>
       <ProgressBar style={{ width: growAnimation }}></ProgressBar>

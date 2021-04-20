@@ -12,6 +12,7 @@ module.exports = function (api) {
             "@screens": "./src/screens",
             "@services": "./src/services",
             "@contexts": "./src/contexts",
+            "@images": "./src/images",
           },
         },
       ],

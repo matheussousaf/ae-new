@@ -1,18 +1,21 @@
 import React from "react";
-import { View, Button } from "react-native";
+import { KeyboardTypeOptions } from "react-native";
 import { useFormik } from "formik";
 import { repeat } from "../utils/index";
 import Input from "../input";
 import PrimaryButton from "../buttons/primary";
-import * as Yup from "yup";
 
-import { Container, InputsContainer } from "./styles";
+import { ButtonContainer, Container, InputsContainer } from "./styles";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface Field {
   initialValue: string;
   name: string;
   placeholder: string;
   mask?: string;
+  type?: KeyboardTypeOptions;
+  maxLenght?: number;
+  isPassword?: boolean;
 }
 
 interface ButtonProps {
@@ -39,7 +42,14 @@ const Form: React.FC<FormProps> = ({
     initialValues[field.name] = field.initialValue;
   }
 
-  const { handleChange, handleBlur, handleSubmit, values, errors } = useFormik({
+  const {
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    values,
+    errors,
+    touched,
+  } = useFormik({
     initialValues: initialValues,
     onSubmit: (values) => {
       onSubmit(values);
@@ -49,24 +59,35 @@ const Form: React.FC<FormProps> = ({
 
   return (
     <Container>
-      <InputsContainer>
-        {fields.map((field, index) => {
-          return (
-            <Input
-              label={field.placeholder}
-              key={index}
-              onChangeText={handleChange(field.name)}
-              onBlur={handleBlur(field.name)}
-              onFocus={() => {}}
-              value={values[field.name]}
-              type="custom"
-              error={errors[field.name]}
-              options={{ mask: field.mask ?? repeat("*", 255) }}
-            />
-          );
-        })}
-      </InputsContainer>
-      <PrimaryButton title={button.title} onPress={handleSubmit} />
+      <KeyboardAwareScrollView>
+        <InputsContainer>
+          {fields.map((field, index) => {
+            return (
+              <Input
+                isPassword={field.isPassword}
+                label={field.placeholder}
+                key={index}
+                onChangeText={handleChange(field.name)}
+                onBlur={handleBlur(field.name)}
+                onFocus={() => {}}
+                value={values[field.name]}
+                type="custom"
+                error={touched[field.name] && errors[field.name]}
+                options={{ mask: field.mask ?? repeat("*", 255) }}
+                keyboardType={field.type}
+                maxLength={field.maxLenght}
+              />
+            );
+          })}
+        </InputsContainer>
+      </KeyboardAwareScrollView>
+      <ButtonContainer>
+        <PrimaryButton
+          isDisabled={Object.keys(errors).length > 0}
+          title={button.title}
+          onPress={handleSubmit}
+        />
+      </ButtonContainer>
     </Container>
   );
 };

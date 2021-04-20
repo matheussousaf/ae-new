@@ -11,6 +11,7 @@ import { AppLoading, registerRootComponent } from "expo";
 import { View, Text } from "react-native";
 import Routes from "@routes/index";
 import { NavigationContainer } from "@react-navigation/native";
+import { AuthContextProvider } from "@contexts/AuthContext";
 
 function App() {
   let [fontsLoaded] = useFonts({
@@ -27,7 +28,9 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Routes />
+      <AuthContextProvider>
+        <Routes />
+      </AuthContextProvider>
     </NavigationContainer>
   );
 }

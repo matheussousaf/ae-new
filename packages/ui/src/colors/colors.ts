@@ -3,6 +3,7 @@ interface ColorProps {
   light: string;
   dark: string;
   danger: string;
+  success: string;
   base200: string;
   base400: string;
   base600: string;
@@ -14,6 +15,7 @@ export const Colors: ColorProps = {
   light: "#ffffff",
   dark: "#333333",
   danger: "#FD8383",
+  success: "#7ACB70",
   base200: "#EFF0F6",
   base400: "#A6A7AC",
   base600: "#6E7191",

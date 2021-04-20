@@ -4,6 +4,8 @@ import Animated, { Easing } from "react-native-reanimated";
 import { Colors } from "../colors/colors";
 import { FontSizes } from "../typography/fonts";
 import { useValue } from "../utils";
+import { Feather } from "@expo/vector-icons";
+
 const { timing } = Animated;
 
 import {
@@ -12,11 +14,13 @@ import {
   Label,
   Error,
   switchColorIfHasError,
+  IconContainer,
 } from "./styles";
 
 interface InputProps extends TextInputMaskProps {
   label?: string;
   error?: string;
+  isPassword?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -24,9 +28,11 @@ const Input: React.FC<InputProps> = ({
   error,
   onFocus,
   onBlur,
+  isPassword,
   ...props
 }) => {
   const [isFocused, setFocused] = useState(false);
+  const [maskedPassword, setMaskedPassword] = useState(true);
 
   const focusAnim = useRef(useValue(0)).current;
 
@@ -60,6 +66,7 @@ const Input: React.FC<InputProps> = ({
           {label}
         </Label>
         <StyledInput
+          secureTextEntry={isPassword && maskedPassword}
           onBlur={(event) => {
             const lengthOfText = props.value.length;
             if (lengthOfText > 0) {
@@ -75,8 +82,33 @@ const Input: React.FC<InputProps> = ({
           }}
           {...props}
         />
+        {isPassword ? (
+          maskedPassword ? (
+            <IconContainer
+              activeOpacity={0.8}
+              onPress={() => setMaskedPassword(false)}
+            >
+              <Feather
+                name="eye"
+                size={20}
+                color={isFocused ? Colors.primary : Colors.base400}
+              />
+            </IconContainer>
+          ) : (
+            <IconContainer
+              activeOpacity={0.8}
+              onPress={() => setMaskedPassword(true)}
+            >
+              <Feather
+                name="eye-off"
+                size={20}
+                color={isFocused ? Colors.primary : Colors.base400}
+              />
+            </IconContainer>
+          )
+        ) : null}
       </Container>
-      {error && <Error>{error}</Error>}
+      <Error style={[error && { display: "flex" }]}>{error}</Error>
     </>
   );
 };

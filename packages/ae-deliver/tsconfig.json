@@ -16,7 +16,8 @@
       "@screens/*": ["src/screens/*"],
       "@services/*": ["src/services/*"],
       "@contexts/*": ["src/contexts/*"],
-      "@routes/*": ["src/routes/*"]
+      "@routes/*": ["src/routes/*"],
+      "@images/*": ["src/images/*"],
     }
   }
 }

@@ -17,7 +17,7 @@ export default function Header({ title, onBackPress }: HeaderProps) {
 
   return (
     <Container>
-      <IconContainer activeOpacity={0.8} onPress={onBackPress} >
+      <IconContainer activeOpacity={0.8} onPress={onBackPress}>
         <Ionicons
           style={{ left: 0 }}
           name="ios-arrow-back"
@@ -25,7 +25,7 @@ export default function Header({ title, onBackPress }: HeaderProps) {
           color={Colors.primary}
         />
       </IconContainer>
-      <Title>{title}</Title>
+      <Title style={{ textAlignVertical: "center" }}>{title}</Title>
       <RightIcon />
     </Container>
   );

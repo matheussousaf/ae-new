@@ -4,13 +4,10 @@ import { Colors } from "../colors/colors";
 
 export const Container = styled.View`
   display: flex;
-  justify-content: center;
-  align-items: center;
   align-items: flex-start;
   flex: 1;
   margin: 0;
 `;
-
 export const ProgressBar = styled(Animated.View)`
   height: 10px;
   width: 100%;
@@ -33,4 +30,16 @@ export const ComponentsContainer = styled(Animated.View)<ComponentsContainerProp
   flex-direction: row;
   width: ${props => props.size * 100}%;
   flex: 1;
+`;
+
+export const Test = styled.View`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;  
+  height: 20px;
+  flex: 1;
+  background: blue;
 `;

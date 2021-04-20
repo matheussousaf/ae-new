@@ -1,7 +1,8 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Register from "@screens/Register/index";
-import { Header as CustomHeader } from "@ae/ui";
+import { Header as CustomHeader, useAlert } from "@ae/ui";
+import { useEffect } from "react";
 
 const RegisterStack = createStackNavigator();
 
