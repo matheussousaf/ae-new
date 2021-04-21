@@ -7,7 +7,7 @@ const SignInStack = createStackNavigator();
 const SignInRoutes: React.FC = () => {
   return (
     <SignInStack.Navigator>
-      <SignInStack.Screen name="SignIn" component={SignIn} />i
+      <SignInStack.Screen name="SignIn" component={SignIn} />
     </SignInStack.Navigator>
   );
 };

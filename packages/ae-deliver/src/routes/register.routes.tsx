@@ -11,6 +11,8 @@ const RegisterRoutes: React.FC = () => {
     return <CustomHeader title="Cadastro" />;
   }
 
+  console.log("Testando");
+
   return (
     <RegisterStack.Navigator>
       <RegisterStack.Screen

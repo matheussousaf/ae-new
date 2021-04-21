@@ -1,17 +1,25 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { createContext } from "react";
 import { View } from "react-native";
 
-interface AuthContextProps {}
+interface AuthContextProps {
+  user?: User;
+}
 
-interface User {}
+interface User {
+  name?: string;
+}
 
-const initialData: AuthContextProps = {};
+const initialData: AuthContextProps = {
+  user: { name: "Matheus" },
+};
 
 export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthContextProvider: React.FC = ({ children }) => {
-  return <View>{children}</View>;
+  return (
+    <AuthContext.Provider value={initialData}>{children}</AuthContext.Provider>
+  );
 };
 
 export const useAuthContext = () => useContext(AuthContext);

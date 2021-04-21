@@ -5,7 +5,7 @@ interface AuthProps {
 export function signIn(): Promise<AuthProps> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({ token: "123938291" });
+      resolve({ token: "x21eiomm2x1e2x1e80921" });
     }, 1000);
   });
 }

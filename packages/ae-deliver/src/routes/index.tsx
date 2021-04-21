@@ -7,13 +7,11 @@ import RegisterRoutes from "./register.routes";
 import SignInRoutes from "./signin.routes";
 
 const Routes: React.FC = () => {
-  
-  const {  } = useAuthContext();
+  const { user } = useAuthContext();
 
   return (
     <AlertProvider>
-      {  }
-      <RegisterRoutes />
+      {user ? <RegisterRoutes /> : <SignInRoutes />}
     </AlertProvider>
   );
 };
