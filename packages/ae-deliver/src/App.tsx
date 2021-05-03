@@ -8,12 +8,13 @@ import {
   FiraSans_700Bold,
 } from "@expo-google-fonts/fira-sans";
 import { registerRootComponent } from "expo";
-import { View, Text } from "react-native";
 import Routes from "@routes/index";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthContextProvider } from "@contexts/AuthContext";
-import AppLoading from 'expo-app-loading';
+import AppLoading from "expo-app-loading";
+import { setLocalizationConfig } from "@config/localization";
 
+setLocalizationConfig();
 
 function App() {
   let [fontsLoaded] = useFonts({

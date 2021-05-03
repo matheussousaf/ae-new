@@ -15,7 +15,7 @@ export const Container = styled.View<HeaderProps>`
   padding: 10px;
   background: ${Colors.light};
   flex: 0 0 10%;
-  height: 100px;
+  min-height: 100px;
   width: 100%;
 `;
 

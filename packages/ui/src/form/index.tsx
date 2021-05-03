@@ -83,7 +83,10 @@ const Form: React.FC<FormProps> = ({
       </KeyboardAwareScrollView>
       <ButtonContainer>
         <PrimaryButton
-          isDisabled={Object.keys(errors).length > 0}
+          isDisabled={
+            Object.keys(errors).length > 0 ||
+            Object.values(touched).length === 0
+          }
           title={button.title}
           onPress={handleSubmit}
         />

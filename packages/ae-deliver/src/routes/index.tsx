@@ -1,19 +1,26 @@
 import { AlertProvider } from "@ae/ui";
 import { useAuthContext } from "@contexts/AuthContext";
+import { SignContextProvider } from "@contexts/SignContext";
 import React from "react";
+import { View, Text } from "react-native";
 import { useEffect } from "react";
-
-import RegisterRoutes from "./register.routes";
-import SignInRoutes from "./signin.routes";
+import MainRoutes from "./main.routes";
+import SignRoutes from "./sign.routes";
 
 const Routes: React.FC = () => {
   const { user } = useAuthContext();
 
-  console.log("entrou");
-  
+  console.log("User", user);
+
   return (
     <AlertProvider>
-      <RegisterRoutes />
+      {user !== undefined ? (
+        <MainRoutes />
+      ) : (
+        <SignContextProvider>
+          <SignRoutes />
+        </SignContextProvider>
+      )}
     </AlertProvider>
   );
 };

@@ -6,9 +6,14 @@ import { Button, View } from "react-native";
 import { signIn } from "@services/auth";
 import { SvgXml } from "react-native-svg";
 import { Test } from "../../images/svgs";
+import { useNavigation } from "@react-navigation/core";
+import { useTranslation } from "@hooks/localization";
 
 const Register: React.FC = () => {
   const { createAlert, dismissAlert } = useAlert();
+  const navigation = useNavigation();
+
+  const t = useTranslation();
 
   const validationSchema = Yup.object({
     nome: Yup.string().required("Nome Completo Obrigatório"),
@@ -29,7 +34,6 @@ const Register: React.FC = () => {
       <Form
         validationSchema={() => validationSchema}
         onSubmit={(values: any) => {
-          console.log("Submitted:", values);
           onNextPress();
         }}
         fields={[
@@ -64,7 +68,6 @@ const Register: React.FC = () => {
       <Form
         validationSchema={() => secondValidationScheam}
         onSubmit={(values: any) => {
-          console.log("Submitted:", values);
           onNextPress();
         }}
         fields={[
@@ -98,7 +101,13 @@ const Register: React.FC = () => {
       <View>
         <Button
           title="Create"
-          onPress={() => createAlert({ text: "Estamos com um problema no nosso sistema tente novamente mais tarde.", type: "danger" })}
+          onPress={() =>
+            createAlert({
+              text:
+                "Estamos com um problema no nosso sistema tente novamente mais tarde.",
+              type: "danger",
+            })
+          }
         />
         <Button title="Dismiss" onPress={() => dismissAlert()} />
       </View>
@@ -120,7 +129,10 @@ const Register: React.FC = () => {
   }
 
   return (
-    <Multiform>
+    <Multiform
+      headerTitle={t("nested.key1")}
+      onLastBackPress={() => navigation.goBack()}
+    >
       {/* <TestAlert /> */}
       {/* <TestImage /> */}
       {/* <TestCodeInput /> */}

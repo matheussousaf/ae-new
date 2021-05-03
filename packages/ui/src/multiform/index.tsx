@@ -9,7 +9,7 @@ import Header from "../header";
 
 const { timing } = Animated;
 
-export const Multiform = ({ children }) => {
+export const Multiform = ({ children, onLastBackPress, headerTitle }) => {
   let subComponents = React.Children.map(children, (child) => {
     return React.cloneElement(child, { onNextPress: nextStep });
   });
@@ -21,7 +21,7 @@ export const Multiform = ({ children }) => {
   ).current;
 
   const tX = useValue(-375);
- 
+
   const slideAnimation = useRef(useValue(0)).current;
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -32,11 +32,16 @@ export const Multiform = ({ children }) => {
       Keyboard.dismiss();
     }
   }
-  
+
   function previousStep() {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
       Keyboard.dismiss();
+      return;
+    }
+
+    if (onLastBackPress) {
+      onLastBackPress();
     }
   }
 
@@ -58,7 +63,6 @@ export const Multiform = ({ children }) => {
     }).start();
 
     const backAction = () => {
-      console.log(currentStep);
       if (currentStep === 1) {
         return false;
       }
@@ -76,8 +80,8 @@ export const Multiform = ({ children }) => {
 
   return (
     <Container>
-      <Header title="Cadastro" onBackPress={previousStep} />
-      
+      <Header title={headerTitle} onBackPress={previousStep} />
+
       <ComponentsContainer
         size={totalSteps}
         /**
