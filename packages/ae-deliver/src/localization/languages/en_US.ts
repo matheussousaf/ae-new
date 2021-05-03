@@ -1,6 +1,4 @@
-import { LanguageType } from "../index";
-
-const enUS: LanguageType = {
+const enUS = {
   hello: "Hello!",
 };
 

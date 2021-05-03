@@ -130,7 +130,7 @@ const Register: React.FC = () => {
 
   return (
     <Multiform
-      headerTitle={t("nested.key1")}
+      headerTitle={t("hello")}
       onLastBackPress={() => navigation.goBack()}
     >
       {/* <TestAlert /> */}

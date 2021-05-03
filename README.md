@@ -1,10 +1,4 @@
-# expo-storybook-workspaces
-
-This is an example of how to configure a monorepo, supporting React Native (through Expo) and siloed React components development through Storybook.
-
-The main idea is that you develop your UI components in isolation, promoting easier maintanability, testability and reuse of these components, while promoting consistency across even multiple applications.
-
-[You can read more](https://joaoportela.com/blog/react-native-isolation-storybook-expo-workspaces) about the rationale and how to set it up, step by step.
+# Monorepo A'ê
 
 ## Installation
 
@@ -12,14 +6,14 @@ The main idea is that you develop your UI components in isolation, promoting eas
 yarn install
 ```
 
-## Running Expo
+## Running A'ê Deliver App
 
 ```
-yarn start
+yarn run:deliver
 ```
 
-## Running Storybook
+## Running UI Components library 
 
 ```
-yarn storybook
+yarn run:ui
 ```

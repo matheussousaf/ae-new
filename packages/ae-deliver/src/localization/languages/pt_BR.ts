@@ -1,6 +1,4 @@
-import { LanguageType } from "../index";
-
-const ptBR: LanguageType = {
+const ptBR = {
   hello: "Olá!",
 };
 
