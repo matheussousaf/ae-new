@@ -12,7 +12,7 @@ import Routes from "@routes/index";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthContextProvider } from "@contexts/AuthContext";
 import AppLoading from "expo-app-loading";
-import { setLocalizationConfig } from "@config/localization";
+import { setLocalizationConfig } from "@config/index";
 
 setLocalizationConfig();
 

@@ -28,6 +28,7 @@ interface FormProps {
   fields: Field[];
   onSubmit: (values: any) => any | Promise<any>;
   button: ButtonProps;
+  // errorsToSet: object;
 }
 
 const Form: React.FC<FormProps> = ({
@@ -35,6 +36,7 @@ const Form: React.FC<FormProps> = ({
   onSubmit,
   fields,
   button,
+  // errorsToSet,
 }) => {
   let initialValues = {};
 
@@ -47,12 +49,14 @@ const Form: React.FC<FormProps> = ({
     handleBlur,
     handleSubmit,
     values,
+    setErrors,
     errors,
     touched,
   } = useFormik({
     initialValues: initialValues,
     onSubmit: (values) => {
       onSubmit(values);
+      // setErrors(errorsToSet);
     },
     validationSchema: validationSchema,
   });

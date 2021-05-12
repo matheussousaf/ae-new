@@ -3,17 +3,16 @@ import { CodeInput, Form, Multiform, useAlert } from "@ae/ui";
 import * as Yup from "yup";
 import { Button, View } from "react-native";
 
-import { signIn } from "@services/auth";
 import { SvgXml } from "react-native-svg";
 import { Test } from "../../images/svgs";
 import { useNavigation } from "@react-navigation/core";
-import { useTranslation } from "@hooks/localization";
+import { useLocalization } from "@hooks/useLocalization";
 
 const Register: React.FC = () => {
   const { createAlert, dismissAlert } = useAlert();
   const navigation = useNavigation();
 
-  const t = useTranslation();
+  const t = useLocalization();
 
   const validationSchema = Yup.object({
     nome: Yup.string().required("Nome Completo Obrigatório"),
@@ -116,13 +115,7 @@ const Register: React.FC = () => {
 
   function TestImage() {
     return (
-      <View
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <View>
         <SvgXml xml={Test} width="200px" />
       </View>
     );
