@@ -21,5 +21,5 @@ export const FontSizes = {
   md: 16,
   xmd: 18,
   lg: 22,
-  xlg: 24,
+  xlg: 28,
 };

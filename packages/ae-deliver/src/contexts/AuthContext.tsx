@@ -1,7 +1,7 @@
 import { createAuthService } from "@services/auth";
 import React, { useContext, useEffect, useState } from "react";
 import { createContext } from "react";
-import { AuthService, User } from "@services/auth";
+import { User } from "@services/auth";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { useSplashScreen } from "@hooks/useSplashScreen";
 
@@ -10,6 +10,7 @@ interface AuthContextProps {
   accessToken?: string;
   login?: () => any;
   logout?: () => void;
+  checkEmail?: (email: string) => Promise<boolean | undefined>;
 }
 
 const initialData: AuthContextProps = {
@@ -20,8 +21,9 @@ const ASYNC_STORAGE_AUTH_KEY = "@Auth";
 
 export const AuthContext = createContext({} as AuthContextProps);
 
+const authService = createAuthService();
+
 export const AuthContextProvider: React.FC = ({ children }) => {
-  const [authService, setAuthService] = useState<AuthService>();
   const [state, setState] = useState<AuthContextProps>(initialData);
   const { getItem, setItem } = useAsyncStorage(
     `${ASYNC_STORAGE_AUTH_KEY}:accessToken`
@@ -30,7 +32,6 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     preventHideSplashScreen();
-    setAuthService(createAuthService());
     isLogged();
   }, []);
 
@@ -40,8 +41,12 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     hideSplashScreen();
   }
 
+  async function checkEmail(email: string): Promise<boolean | undefined> {
+    return await authService.fakeCheckEmail();
+  }
+
   async function login(email?: string, password?: string) {
-    const data = await authService?.signIn({
+    const data = await authService.signIn({
       email: "matheus@gmail.com",
       password: "teste@123",
     });
@@ -52,7 +57,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 
     await setItem(data.accessToken);
 
-    authService?.authenticate(data?.accessToken);
+    authService.authenticate(data?.accessToken);
     setState({ user: data?.user });
 
     return state.user;
@@ -63,7 +68,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ login, logout, ...state }}>
+    <AuthContext.Provider value={{ login, logout, checkEmail, ...state }}>
       {children}
     </AuthContext.Provider>
   );

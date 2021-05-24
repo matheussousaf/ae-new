@@ -6,31 +6,13 @@ import {
 import SignIn from "@screens/SignIn/index";
 import { useSignContext } from "@contexts/SignContext";
 import Register from "@screens/Register/index";
-import { Header as CustomHeader } from "@ae/ui";
-import { useNavigation } from "@react-navigation/core";
 
-const SignInStack = createStackNavigator();
+const SignStack = createStackNavigator();
 const RegisterStack = createStackNavigator();
 
 const SignRoutes: React.FC = () => {
   const { signing } = useSignContext();
-
-  return signing ? <RegisterNavigator /> : <SignInNavigator />;
-};
-
-const Header: React.FC<{ title: string }> = ({ title }) => {
-  const navigation = useNavigation();
-
-  return (
-    <CustomHeader
-      title={title}
-      onBackPress={() => {
-        if (navigation.canGoBack()) {
-          navigation.goBack();
-        }
-      }}
-    />
-  );
+  return <SignNavigator />;
 };
 
 const RegisterNavigator = () => {
@@ -39,37 +21,35 @@ const RegisterNavigator = () => {
       <RegisterStack.Screen
         options={{
           headerShown: false,
-          // header: () => <Header title="Register" />,
-          // headerStyle: { elevation: 0, shadowOpacity: 0 },
         }}
         name="Register"
         component={Register}
       />
-      <RegisterStack.Screen name="Login" component={SignInNavigator} />
+      <RegisterStack.Screen name="Login" component={SignNavigator} />
     </RegisterStack.Navigator>
   );
 };
 
-const SignInNavigator = () => {
+const SignNavigator = () => {
   return (
-    <SignInStack.Navigator
+    <SignStack.Navigator
       screenOptions={{
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
     >
-      <SignInStack.Screen
+      <SignStack.Screen
         options={{
           headerShown: false,
         }}
         name="SignIn"
         component={SignIn}
       />
-      <SignInStack.Screen
+      <SignStack.Screen
         options={{ headerShown: false }}
         name="Register"
         component={RegisterNavigator}
       />
-    </SignInStack.Navigator>
+    </SignStack.Navigator>
   );
 };
 

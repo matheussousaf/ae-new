@@ -1,11 +1,13 @@
 import React from "react";
 import { Container, Title } from "./styles";
 import { TouchableOpacityProps } from "react-native";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
   width?: string;
   isDisabled?: boolean;
+  icon?: any;
 }
 
 export default function PrimaryButton({
@@ -13,6 +15,7 @@ export default function PrimaryButton({
   isDisabled,
   onPress,
   width,
+  icon,
 }: ButtonProps) {
   return (
     <Container
@@ -22,6 +25,7 @@ export default function PrimaryButton({
       width={width}
       disabled={isDisabled}
     >
+      <SimpleLineIcons name={icon} size={20} color="white" />
       <Title disabled={isDisabled}>{title}</Title>
     </Container>
   );

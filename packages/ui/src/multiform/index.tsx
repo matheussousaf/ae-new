@@ -1,4 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  createContext,
+  useContext,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 import { ComponentsContainer, Container, ProgressBar } from "./styles";
 import Page from "./page/index";
@@ -8,42 +16,42 @@ import { Dimensions, BackHandler, Keyboard } from "react-native";
 import Header from "../header";
 
 const { timing } = Animated;
+interface MultiformProps {
+  onLastBackPress: () => void;
+  headerTitle?: string;
+}
+interface MultiformContextProps<T> {
+  nextStep: () => void;
+  previousStep: () => void;
+  data: T;
+  setData: Dispatch<SetStateAction<T>>;
+}
 
-export const Multiform = ({ children, onLastBackPress, headerTitle }) => {
+export function createMultiformContext<T = any>() {
+  return createContext<MultiformContextProps<T> | null>(null);
+}
+
+const MultiformContext = createMultiformContext();
+
+const Multiform: React.FC<MultiformProps> = ({
+  children,
+  onLastBackPress,
+  headerTitle,
+}) => {
+  const totalSteps = React.Children.count(children);
+
   let subComponents = React.Children.map(children, (child) => {
-    return React.cloneElement(child, { onNextPress: nextStep });
+    return child;
   });
-
-  const totalSteps = children.length;
 
   const growAnimation = useRef(
     useValue(Dimensions.get("window").width / totalSteps)
   ).current;
 
-  const tX = useValue(-375);
-
   const slideAnimation = useRef(useValue(0)).current;
 
   const [currentStep, setCurrentStep] = useState(1);
-
-  function nextStep() {
-    if (currentStep < totalSteps) {
-      setCurrentStep(currentStep + 1);
-      Keyboard.dismiss();
-    }
-  }
-
-  function previousStep() {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-      Keyboard.dismiss();
-      return;
-    }
-
-    if (onLastBackPress) {
-      onLastBackPress();
-    }
-  }
+  const [data, setData] = useState({});
 
   useEffect(() => {
     // Manage Pages sliding
@@ -78,23 +86,53 @@ export const Multiform = ({ children, onLastBackPress, headerTitle }) => {
     return () => backHandler.remove();
   }, [currentStep]);
 
-  return (
-    <Container>
-      <Header title={headerTitle} onBackPress={previousStep} />
+  function nextStep() {
+    if (currentStep < totalSteps) {
+      setCurrentStep(currentStep + 1);
+      Keyboard.dismiss();
+    }
+  }
 
-      <ComponentsContainer
-        size={totalSteps}
-        /**
+  function previousStep() {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+      Keyboard.dismiss();
+      return;
+    }
+
+    if (onLastBackPress) {
+      onLastBackPress();
+    }
+  }
+  return (
+    <MultiformContext.Provider
+      value={{
+        nextStep,
+        previousStep,
+        data,
+        setData,
+      }}
+    >
+      <Container>
+        <Header title={headerTitle} onBackPress={previousStep} />
+        <ComponentsContainer
+          size={totalSteps}
+          /**
          //@ts-ignore */
-        style={{ transform: [{ translateX: slideAnimation }] }}
-      >
-        {subComponents.map((component, index) => {
-          return <Page key={index} content={component} />;
-        })}
-      </ComponentsContainer>
-      <ProgressBar style={{ width: growAnimation }}></ProgressBar>
-    </Container>
+          style={{ transform: [{ translateX: slideAnimation }] }}
+        >
+          {subComponents.map((component, index) => {
+            return <Page key={index} content={component} />;
+          })}
+        </ComponentsContainer>
+        <ProgressBar style={{ width: growAnimation }} />
+      </Container>
+    </MultiformContext.Provider>
   );
 };
+
+export function useMultiform<T = any>() {
+  return useContext<MultiformContextProps<T>>(MultiformContext);
+}
 
 export default Multiform;

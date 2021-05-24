@@ -18,9 +18,15 @@ interface Field {
   isPassword?: boolean;
 }
 
+type BeforeSubmit = {
+  errors?: object;
+};
+
 interface ButtonProps {
   title?: string;
   isPrimary?: boolean;
+  icon?: string;
+  disabledWithError?: boolean;
 }
 
 interface FormProps {
@@ -28,7 +34,7 @@ interface FormProps {
   fields: Field[];
   onSubmit: (values: any) => any | Promise<any>;
   button: ButtonProps;
-  // errorsToSet: object;
+  beforeSubmit?: () => Promise<BeforeSubmit | void>;
 }
 
 const Form: React.FC<FormProps> = ({
@@ -36,7 +42,7 @@ const Form: React.FC<FormProps> = ({
   onSubmit,
   fields,
   button,
-  // errorsToSet,
+  beforeSubmit,
 }) => {
   let initialValues = {};
 
@@ -56,7 +62,19 @@ const Form: React.FC<FormProps> = ({
     initialValues: initialValues,
     onSubmit: (values) => {
       onSubmit(values);
-      // setErrors(errorsToSet);
+      (async () => {
+        if (beforeSubmit) {
+          const result = await beforeSubmit();
+
+          if (!result) {
+            return;
+          }
+
+          if (result.errors) {
+            setErrors(result.errors);
+          }
+        }
+      })();
     },
     validationSchema: validationSchema,
   });
@@ -88,11 +106,13 @@ const Form: React.FC<FormProps> = ({
       <ButtonContainer>
         <PrimaryButton
           isDisabled={
-            Object.keys(errors).length > 0 ||
-            Object.values(touched).length === 0
+            button.disabledWithError &&
+            (Object.keys(errors).length > 0 ||
+              Object.values(touched).length === 0)
           }
           title={button.title}
           onPress={handleSubmit}
+          icon={button.icon}
         />
       </ButtonContainer>
     </Container>

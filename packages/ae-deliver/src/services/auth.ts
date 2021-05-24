@@ -39,9 +39,12 @@ export class AuthService extends BaseService {
     this.create(API_BASE);
   }
 
-  async listUsers() {
-    const data = await this.get("/users");
-    return data;
+  async fakeCheckEmail(): Promise<boolean> {
+    return new Promise((res, rej) => {
+      setTimeout(() => {
+        res(false);
+      }, 1000);
+    });
   }
 
   async signIn(body: SignInBody): Promise<SignInResponse | undefined> {

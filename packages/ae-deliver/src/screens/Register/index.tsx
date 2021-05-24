@@ -1,22 +1,23 @@
 import React from "react";
-import { CodeInput, Form, Multiform, useAlert } from "@ae/ui";
+import { Form, Multiform, useMultiform } from "@ae/ui";
 import * as Yup from "yup";
-import { Button, View } from "react-native";
 
-import { SvgXml } from "react-native-svg";
-import { Test } from "../../images/svgs";
 import { useNavigation } from "@react-navigation/core";
 import { useLocalization } from "@hooks/useLocalization";
+interface RegisterForm {
+  name?: string;
+  email?: string;
+  phone?: string;
+}
 
 const Register: React.FC = () => {
-  const { createAlert, dismissAlert } = useAlert();
   const navigation = useNavigation();
 
   const t = useLocalization();
 
   const validationSchema = Yup.object({
-    nome: Yup.string().required("Nome Completo Obrigatório"),
-    phone: Yup.string().required("CPF Obrigatório"),
+    name: Yup.string().required("Nome Completo Obrigatório"),
+    email: Yup.string().required("CPF Obrigatório"),
     // Implement on specific screen.
     // dataNasc: Yup.string().required("Data Obrigatoria").test('Dia/Mes/Ano', 'Necessário idade acima de 18 anos', function(value) {
     //   var dateParts = value.split("/");
@@ -25,36 +26,30 @@ const Register: React.FC = () => {
   });
 
   const secondValidationScheam = Yup.object({
-    name: Yup.string().required("Nome completo é necessário"),
+    phone: Yup.string().required("Nome completo é necessário"),
   });
 
-  function FormExample({ onNextPress }: any) {
+  function FormExample() {
+    const { nextStep, data, setData } = useMultiform<RegisterForm>();
+
     return (
       <Form
         validationSchema={() => validationSchema}
         onSubmit={(values: any) => {
-          onNextPress();
+          setData({ ...data, email: values.email, name: values.name });
+          nextStep();
         }}
         fields={[
           {
-            name: "nome",
+            name: "name",
             initialValue: "",
             placeholder: "Nome Completo",
           },
           {
-            name: "phone",
+            name: "email",
             initialValue: "",
             placeholder: "Telefone",
-            mask: "(99) 99999-9999",
-            type: "numeric",
-            maxLenght: 15,
-            isPassword: true,
-          },
-          {
-            name: "dataNasc",
-            initialValue: "",
-            placeholder: "Data de Nascimento",
-            mask: "99/99/9999",
+            type: "email-address",
           },
         ]}
         button={{ title: "Próxima Etapa" }}
@@ -62,21 +57,19 @@ const Register: React.FC = () => {
     );
   }
 
-  function FormExample2({ onNextPress }: any) {
+  function FormExample2() {
+    const { nextStep, data, setData } = useMultiform<RegisterForm>();
+
     return (
       <Form
         validationSchema={() => secondValidationScheam}
         onSubmit={(values: any) => {
-          onNextPress();
+          setData({ ...data, phone: values.phone });
+          nextStep();
         }}
         fields={[
           {
-            name: "name",
-            initialValue: "",
-            placeholder: "Email",
-          },
-          {
-            name: "celular",
+            name: "phone",
             initialValue: "",
             placeholder: "Celular",
             mask: "+55 (99) 99999-9999",
@@ -87,48 +80,11 @@ const Register: React.FC = () => {
     );
   }
 
-  function TestCodeInput({ onNextPress }: any) {
-    return (
-      <View>
-        <CodeInput />
-      </View>
-    );
-  }
-
-  function TestAlert({ onNextPress }: any) {
-    return (
-      <View>
-        <Button
-          title="Create"
-          onPress={() =>
-            createAlert({
-              text:
-                "Estamos com um problema no nosso sistema tente novamente mais tarde.",
-              type: "danger",
-            })
-          }
-        />
-        <Button title="Dismiss" onPress={() => dismissAlert()} />
-      </View>
-    );
-  }
-
-  function TestImage() {
-    return (
-      <View>
-        <SvgXml xml={Test} width="200px" />
-      </View>
-    );
-  }
-
   return (
     <Multiform
-      headerTitle={t("hello")}
+      headerTitle="Beta multiform"
       onLastBackPress={() => navigation.goBack()}
     >
-      {/* <TestAlert /> */}
-      {/* <TestImage /> */}
-      {/* <TestCodeInput /> */}
       <FormExample />
       <FormExample2 />
     </Multiform>
