@@ -10,7 +10,7 @@ import React, {
 
 import { ComponentsContainer, Container, ProgressBar } from "./styles";
 import Page from "./page/index";
-import Animated, { Easing } from "react-native-reanimated";
+import Animated, { EasingNode } from "react-native-reanimated";
 import { useValue } from "../utils";
 import { Dimensions, BackHandler, Keyboard } from "react-native";
 import Header from "../header";
@@ -60,14 +60,14 @@ const Multiform: React.FC<MultiformProps> = ({
         Dimensions.get("window").width -
         Dimensions.get("window").width * currentStep,
       duration: 200,
-      easing: Easing.in(Easing.linear),
+      easing: EasingNode.in(EasingNode.linear),
     }).start();
 
     // Manage grow/shrink ProgressBar animation
     timing(growAnimation, {
       toValue: (Dimensions.get("window").width / totalSteps) * currentStep,
       duration: 300,
-      easing: Easing.inOut(Easing.circle),
+      easing: EasingNode.inOut(EasingNode.circle),
     }).start();
 
     const backAction = () => {

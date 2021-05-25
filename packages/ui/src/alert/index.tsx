@@ -15,7 +15,7 @@ import {
 } from "./styles";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Colors } from "../colors/colors";
-import Animated, { Easing } from "react-native-reanimated";
+import Animated, { EasingNode } from "react-native-reanimated";
 import { useValue } from "../utils";
 
 const { timing } = Animated;
@@ -43,7 +43,11 @@ const Alert: React.FC<AlertProps> = ({ text, type }) => {
           {type === "danger" ? (
             <Feather name="alert-circle" size={24} color={Colors.light} />
           ) : (
-            <Ionicons name="ios-checkmark-circle-outline" size={24} color={Colors.light} />
+            <Ionicons
+              name="ios-checkmark-circle-outline"
+              size={24}
+              color={Colors.light}
+            />
           )}
         </IconContainer>
         <Title>{text || "It has been an error with this alert"}</Title>
@@ -61,7 +65,7 @@ export const AlertProvider: React.FC = ({ children }) => {
   useEffect(() => {
     timing(moveAnimation, {
       duration: 500,
-      easing: Easing.in(Easing.linear),
+      easing: EasingNode.in(EasingNode.linear),
       toValue: !alertVisible ? -200 : 0,
     }).start();
   }, [alertVisible]);

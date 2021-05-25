@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TextInputMaskProps } from "react-native-masked-text";
-import Animated, { Easing } from "react-native-reanimated";
+import Animated, { EasingNode } from "react-native-reanimated";
 import { Colors } from "../colors/colors";
 import { FontSizes } from "../typography/fonts";
 import { useValue } from "../utils";
@@ -40,7 +40,7 @@ const Input: React.FC<InputProps> = ({
     timing(focusAnim, {
       toValue: isFocused ? 1 : 0,
       duration: 100,
-      easing: Easing.bezier(0.4, 0, 0.2, 1),
+      easing: EasingNode.bezier(0.4, 0, 0.2, 1),
     }).start();
   }, [isFocused]);
 
