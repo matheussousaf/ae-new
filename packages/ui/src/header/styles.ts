@@ -25,18 +25,18 @@ export const Title = styled.Text`
   font-family: ${Fonts.secondary.regular};
   text-transform: uppercase;
   height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 20px;
 `;
 
 export const IconContainer = styled.TouchableOpacity`
   margin-left: 20px;
-  width: 30px;
-  height: 30px;
-  background: #fff;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const LeftIconContainer = styled(IconContainer)`
+  background: #f9f9ff;
+  border-radius: 50px;
 `;

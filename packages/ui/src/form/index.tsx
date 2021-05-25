@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { KeyboardTypeOptions } from "react-native";
 import { useFormik } from "formik";
 import { repeat } from "../utils/index";
@@ -44,6 +44,8 @@ const Form: React.FC<FormProps> = ({
   button,
   beforeSubmit,
 }) => {
+  const [loading, setLoading] = useState(false);
+
   let initialValues = {};
 
   for (let field of fields) {
@@ -60,8 +62,7 @@ const Form: React.FC<FormProps> = ({
     touched,
   } = useFormik({
     initialValues: initialValues,
-    onSubmit: (values) => {
-      onSubmit(values);
+    onSubmit: async (values) => {
       (async () => {
         if (beforeSubmit) {
           const result = await beforeSubmit();
@@ -75,6 +76,9 @@ const Form: React.FC<FormProps> = ({
           }
         }
       })();
+      setLoading(true);
+      await onSubmit(values);
+      setLoading(false);
     },
     validationSchema: validationSchema,
   });
@@ -112,6 +116,8 @@ const Form: React.FC<FormProps> = ({
           }
           title={button.title}
           onPress={handleSubmit}
+          hasLoadingIndicator
+          loading={loading}
           icon={button.icon}
         />
       </ButtonContainer>

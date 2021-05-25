@@ -7,10 +7,11 @@ import SignRoutes from "./sign.routes";
 
 const Routes: React.FC = () => {
   const { accessToken } = useAuthContext();
+  console.log(accessToken);
 
   return (
     <AlertProvider>
-      {accessToken !== "" ? (
+      {accessToken !== undefined ? (
         <MainRoutes />
       ) : (
         <SignContextProvider>

@@ -1,102 +1,94 @@
-import { Form, Typography } from "@ae/ui";
-import { useAuthContext } from "@contexts/AuthContext";
-import { useNavigation } from "@react-navigation/core";
 import React from "react";
+import { Form, Multiform, useMultiform } from "@ae/ui";
 import * as Yup from "yup";
 
-import { Container, FormContainer, LinkText, TextContainer } from "./styles";
-import { SvgXml } from "react-native-svg";
-import { Guy } from "@images/guy";
-// import Animated, {
-//   useSharedValue,
-//   useAnimatedStyle,
-//   withSpring,
-// } from "react-native-reanimated";
-
-import { Button, View } from "react-native";
-import Svg, { Circle } from "react-native-svg";
-
-const validationSchema = Yup.object({
-  email: Yup.string()
-    .required("O e-mail é obrigatório.")
-    .email("Insira um e-mail válido."),
-});
+import { useNavigation } from "@react-navigation/core";
+import { useLocalization } from "@hooks/useLocalization";
+interface SignInForm {
+  name?: string;
+  email?: string;
+  phone?: string;
+}
 
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
-  const { login, checkEmail } = useAuthContext();
 
-  function handleLogin() {
-    if (login) {
-      login();
-    }
+  const t = useLocalization();
+
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Nome Completo Obrigatório"),
+    email: Yup.string().required("CPF Obrigatório"),
+    // Implement on specific screen.
+    // dataNasc: Yup.string().required("Data Obrigatoria").test('Dia/Mes/Ano', 'Necessário idade acima de 18 anos', function(value) {
+    //   var dateParts = value.split("/");
+    //   return differenceInYears(new Date(), new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0])) >= 18;
+    // }),a
+  });
+
+  const secondValidationScheam = Yup.object({
+    phone: Yup.string().required("Nome completo é necessário"),
+  });
+
+  function FormExample() {
+    const { nextStep, data, setData } = useMultiform<SignInForm>();
+
+    return (
+      <Form
+        validationSchema={() => validationSchema}
+        onSubmit={(values: any) => {
+          setData({ ...data, email: values.email, name: values.name });
+          nextStep();
+        }}
+        fields={[
+          {
+            name: "name",
+            initialValue: "",
+            placeholder: "Nome Completo",
+          },
+          {
+            name: "email",
+            initialValue: "",
+            placeholder: "Telefone",
+            type: "email-address",
+          },
+        ]}
+        button={{ title: "Próxima Etapa" }}
+      />
+    );
+  }
+
+  function FormExample2() {
+    const { nextStep, data, setData } = useMultiform<SignInForm>();
+
+    return (
+      <Form
+        validationSchema={() => secondValidationScheam}
+        onSubmit={(values: any) => {
+          setData({ ...data, phone: values.phone });
+          nextStep();
+        }}
+        fields={[
+          {
+            name: "phone",
+            initialValue: "",
+            placeholder: "Celular",
+            mask: "+55 (99) 99999-9999",
+          },
+        ]}
+        button={{ title: "Concluir" }}
+      />
+    );
   }
 
   return (
-    <Container>
-      <TextContainer>
-        <Typography type="heading" text="Seja um entregador" />
-        <Typography
-          type="subheading"
-          text="Sua senha é privada e não será necessária fora do aplicativo"
-        />
-      </TextContainer>
-      <SvgXml width="300px" xml={Guy} />
-      <FormContainer>
-        <Form
-          validationSchema={() => validationSchema}
-          onSubmit={async (values: any) => {
-            if (checkEmail) {
-              try {
-                await checkEmail(values.email);
-                // navigation.navigate("Register");
-              } catch (e) {
-                return;
-              }
-            }
-          }}
-          fields={[
-            {
-              name: "email",
-              initialValue: "",
-              placeholder: "Email",
-              type: "email-address",
-            },
-          ]}
-          button={{ title: "Entrar", icon: "login" }}
-        />
-        <LinkText>Esqueci minha senha</LinkText>
-      </FormContainer>
-    </Container>
+    <Multiform
+      headerTitle="SignIn Form"
+      onLastBackPress={() => navigation.goBack()}
+    >
+      <FormExample />
+      <FormExample2 />
+    </Multiform>
   );
 };
-
-// function CircleLoading({ ...props }) {
-//   const width = useSharedValue(50);
-
-//   const style = useAnimatedStyle(() => {
-//     return {
-//       width: withTiming(width.value, {
-//         duration: 500,
-//         easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-//       }),
-//     };
-//   });
-
-//   return (
-//     <Animated.View style={[style]}>
-//       <Svg height="50%" width="50%" viewBox="0 0 100 100" {...props}>
-//         <Circle
-//           cx="50"
-//           cy="50"
-//           r="45"
-//           stroke="blue"
-//           strokeWidth="10"
-//           fill="none"
-//         />
-//       </Svg>
-//     </Animated.View>
-//   );
-// }
 
 export default SignIn;

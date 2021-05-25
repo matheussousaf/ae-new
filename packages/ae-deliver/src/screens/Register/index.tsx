@@ -22,7 +22,7 @@ const Register: React.FC = () => {
     // dataNasc: Yup.string().required("Data Obrigatoria").test('Dia/Mes/Ano', 'Necessário idade acima de 18 anos', function(value) {
     //   var dateParts = value.split("/");
     //   return differenceInYears(new Date(), new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0])) >= 18;
-    // }),
+    // }),a
   });
 
   const secondValidationScheam = Yup.object({
@@ -82,7 +82,7 @@ const Register: React.FC = () => {
 
   return (
     <Multiform
-      headerTitle="Beta multiform"
+      headerTitle="Register Form"
       onLastBackPress={() => navigation.goBack()}
     >
       <FormExample />

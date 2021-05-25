@@ -1,9 +1,8 @@
 import React from "react";
-import { Container, Title, IconContainer } from "./styles";
+import { Container, Title, IconContainer, LeftIconContainer } from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import { FontSizes } from "../typography/fonts";
 import { Colors } from "../colors/colors";
-import { View, Text } from "react-native";
 
 interface HeaderProps {
   title: string;
@@ -12,19 +11,19 @@ interface HeaderProps {
 
 export default function Header({ title, onBackPress }: HeaderProps) {
   function RightIcon() {
-    return <View />;
+    return <IconContainer />;
   }
 
   return (
     <Container>
-      <IconContainer activeOpacity={0.8} onPress={onBackPress}>
+      <LeftIconContainer activeOpacity={0.8} onPress={onBackPress}>
         <Ionicons
           style={{ left: 0 }}
           name="ios-arrow-back"
           size={FontSizes.lg}
           color={Colors.primary}
         />
-      </IconContainer>
+      </LeftIconContainer>
       <Title style={{ textAlignVertical: "center" }}>{title}</Title>
       <RightIcon />
     </Container>

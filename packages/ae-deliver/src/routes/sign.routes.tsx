@@ -3,11 +3,13 @@ import {
   CardStyleInterpolators,
   createStackNavigator,
 } from "@react-navigation/stack";
-import SignIn from "@screens/SignIn/index";
+import Sign from "@screens/Sign/index";
 import { useSignContext } from "@contexts/SignContext";
 import Register from "@screens/Register/index";
+import SignIn from "@screens/SignIn";
 
 const SignStack = createStackNavigator();
+const SignInStack = createStackNavigator();
 const RegisterStack = createStackNavigator();
 
 const SignRoutes: React.FC = () => {
@@ -30,6 +32,25 @@ const RegisterNavigator = () => {
   );
 };
 
+const SignInNavigator = () => {
+  return (
+    <SignInStack.Navigator
+      screenOptions={{
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}
+    >
+      <RegisterStack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="SignIn"
+        component={SignIn}
+      />
+      <RegisterStack.Screen name="Login" component={SignNavigator} />
+    </SignInStack.Navigator>
+  );
+};
+
 const SignNavigator = () => {
   return (
     <SignStack.Navigator
@@ -41,8 +62,13 @@ const SignNavigator = () => {
         options={{
           headerShown: false,
         }}
+        name="Sign"
+        component={Sign}
+      />
+      <SignStack.Screen
+        options={{ headerShown: false }}
         name="SignIn"
-        component={SignIn}
+        component={SignInNavigator}
       />
       <SignStack.Screen
         options={{ headerShown: false }}

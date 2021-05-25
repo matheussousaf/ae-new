@@ -42,7 +42,7 @@ export class AuthService extends BaseService {
   async fakeCheckEmail(): Promise<boolean> {
     return new Promise((res, rej) => {
       setTimeout(() => {
-        res(false);
+        res(true);
       }, 1000);
     });
   }
