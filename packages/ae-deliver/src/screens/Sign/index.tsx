@@ -6,7 +6,7 @@ import * as Yup from "yup";
 
 import { Container, FormContainer, LinkText, TextContainer } from "./styles";
 import { SvgXml } from "react-native-svg";
-import { Guy } from "@images/guy";
+import { motorGuy } from "@images/motor.guy";
 // import Animated, {
 //   useSharedValue,
 //   useAnimatedStyle,
@@ -41,7 +41,7 @@ const Sign: React.FC = () => {
           text="Sua senha é privada e não será necessária fora do aplicativo"
         />
       </TextContainer>
-      <SvgXml width="300px" xml={Guy} />
+      <SvgXml width="300px" xml={motorGuy} />
       <FormContainer>
         <Form
           validationSchema={() => validationSchema}

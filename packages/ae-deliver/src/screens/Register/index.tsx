@@ -1,12 +1,23 @@
 import React from "react";
-import { Form, Multiform, useMultiform } from "@ae/ui";
+import { Typography, Form, Multiform, useMultiform } from "@ae/ui";
 import * as Yup from "yup";
 
 import { useNavigation } from "@react-navigation/core";
 import { useLocalization } from "@hooks/useLocalization";
+
+import { Container, FormContainer, LinkText, TextContainer, TextContainer2, InfoText } from "./styles";
+import { SvgXml } from "react-native-svg";
+import { badgeGuy } from "@images/badge.guy";
+import { clockGuy } from "@images/clock.guy";
+import { badgeAe } from "@images/badge.ae";
+import { securityGuy } from "@images/security.guy";
+
 interface RegisterForm {
   name?: string;
   email?: string;
+  cpf?: string;
+  sms?: string;
+  password?: string;
   phone?: string;
 }
 
@@ -17,7 +28,7 @@ const Register: React.FC = () => {
 
   const validationSchema = Yup.object({
     name: Yup.string().required("Nome Completo Obrigatório"),
-    email: Yup.string().required("CPF Obrigatório"),
+    cpf: Yup.string().required("CPF Obrigatório"),
     // Implement on specific screen.
     // dataNasc: Yup.string().required("Data Obrigatoria").test('Dia/Mes/Ano', 'Necessário idade acima de 18 anos', function(value) {
     //   var dateParts = value.split("/");
@@ -25,18 +36,40 @@ const Register: React.FC = () => {
     // }),a
   });
 
-  const secondValidationScheam = Yup.object({
-    phone: Yup.string().required("Nome completo é necessário"),
+  const secondValidationSchema = Yup.object({
+    phone: Yup.string().required("Nome Celular é necessário"),
+    email: Yup.string().required("Email Obrigatório"),
   });
 
-  function FormExample() {
+  const thirdValidationSchema = Yup.object({
+    sms: Yup.string().required("Código SMS é necessário"),
+
+  });
+
+  const fourthValidationSchema = Yup.object({
+    password: Yup.string().required("Nome Celular é necessário"),
+
+  });
+
+  function FormRegisterNameCPF() {
     const { nextStep, data, setData } = useMultiform<RegisterForm>();
 
     return (
+
+      <Container>
+      <TextContainer>
+        <Typography type="heading" text="Vamos nos conhecer melhor!" />
+        <Typography
+          type="subheading"
+          text="Digite os seus dados pessoais."
+        />
+      </TextContainer>
+      <SvgXml width="300px" xml={badgeGuy} />
+      <FormContainer>
       <Form
         validationSchema={() => validationSchema}
         onSubmit={(values: any) => {
-          setData({ ...data, email: values.email, name: values.name });
+          setData({ ...data, cpf: values.cpf, name: values.name });
           nextStep();
         }}
         fields={[
@@ -46,47 +79,165 @@ const Register: React.FC = () => {
             placeholder: "Nome Completo",
           },
           {
-            name: "email",
+            name: "cpf",
             initialValue: "",
-            placeholder: "Telefone",
-            type: "email-address",
+            placeholder: "CPF",
+            type: 'numeric',
+            mask: "999.999.999-99",
           },
         ]}
         button={{ title: "Próxima Etapa" }}
       />
+
+      </FormContainer>
+    </Container>
     );
   }
 
-  function FormExample2() {
+
+
+  function FormRegisterMailPhone() {
     const { nextStep, data, setData } = useMultiform<RegisterForm>();
 
     return (
+
+      <Container>
+      <TextContainer>
+        <Typography type="heading" text="Vamos nos conhecer melhor!" />
+        <Typography
+          type="subheading"
+          text="Digite os seus dados pessoais."
+        />
+      </TextContainer>
+      <SvgXml width="300px" xml={clockGuy} />
+      <FormContainer>
       <Form
-        validationSchema={() => secondValidationScheam}
+        validationSchema={() => secondValidationSchema}
         onSubmit={(values: any) => {
-          setData({ ...data, phone: values.phone });
+          setData({ ...data, email: values.email, phone: values.phone });
+          nextStep();
+        }}
+        fields={[
+            {
+              name: "email",
+              initialValue: "",
+              placeholder: "Email",
+              type: "email-address",
+            },
+            {
+            name: "phone",
+            initialValue: "",
+            placeholder: "Celular",
+            type: 'numeric',
+            mask: "+55 (99) 99999-9999",
+            
+          },
+        ]}
+
+
+        
+        button={{ title: "Próxima Etapa" }}
+      />
+      </FormContainer>
+    </Container>
+
+    );
+  }
+
+
+  function FormRegisterSMS() {
+    const { nextStep, data, setData } = useMultiform<RegisterForm>();
+
+    return (
+
+      <Container>
+      <TextContainer2 id='longer'>
+        <Typography type="heading" text="Precisamos confirmar a sua identidade." />
+        <Typography
+          type="subheading"
+          text="Insira o código enviado para o seu SMS."
+        />
+      </TextContainer2>
+      <SvgXml width="300px" xml={badgeAe} />
+      <FormContainer>
+      <Form
+        validationSchema={() => thirdValidationSchema}
+        onSubmit={(values: any) => {
+          setData({ ...data, sms: values.sms });
           nextStep();
         }}
         fields={[
           {
-            name: "phone",
+            name: "sms",
             initialValue: "",
-            placeholder: "Celular",
-            mask: "+55 (99) 99999-9999",
+            placeholder: "SMS",
           },
+
+        ]}
+        button={{ title: "Quase Lá!" }}
+      />
+      </FormContainer>
+    </Container>
+
+    );
+  }
+
+
+
+
+  function FormRegisterPassword() {
+    const { nextStep, data, setData } = useMultiform<RegisterForm>();
+
+    return (
+
+      <Container>
+      <TextContainer>
+        <Typography type="heading" text="Sua proteção em primeiro lugar!" />
+        <Typography
+          type="subheading"
+          text="Crie uma senha forte."
+        />
+      </TextContainer>
+      <SvgXml width="300px" xml={securityGuy} />
+      <FormContainer>
+      <Form
+        validationSchema={() => fourthValidationSchema}
+        onSubmit={()=>{nextStep();}}
+        // onSubmit={(values: any) => {
+        //   setData({ ...data, email: values.email, phone: values.phone });
+        //   nextStep();
+        // }}
+        fields={[
+          
+          {
+            name: "senha",
+            initialValue: "",
+            placeholder: "Senha",
+          },
+          {
+          name: "senha2 ",
+          initialValue: "",
+          placeholder: "Repita a senha",
+          },
+
         ]}
         button={{ title: "Concluir" }}
       />
+      </FormContainer>
+    </Container>
+
     );
   }
 
   return (
     <Multiform
-      headerTitle="Register Form"
+      headerTitle="Cadastro"
       onLastBackPress={() => navigation.goBack()}
     >
-      <FormExample />
-      <FormExample2 />
+      <FormRegisterNameCPF />
+      <FormRegisterMailPhone />
+      <FormRegisterSMS />
+      <FormRegisterPassword />
     </Multiform>
   );
 };
