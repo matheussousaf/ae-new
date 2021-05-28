@@ -12,8 +12,9 @@ import { ComponentsContainer, Container, ProgressBar } from "./styles";
 import Page from "./page/index";
 import Animated, { EasingNode } from "react-native-reanimated";
 import { useValue } from "../utils";
-import { Dimensions, BackHandler, Keyboard } from "react-native";
+import { Dimensions, BackHandler, Keyboard, TextInput } from "react-native";
 import Header from "../header";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const { timing } = Animated;
 interface MultiformProps {
@@ -25,6 +26,8 @@ interface MultiformContextProps<T> {
   previousStep: () => void;
   data: T;
   setData: Dispatch<SetStateAction<T>>;
+  imageShown?: boolean;
+  setImageShown: Dispatch<SetStateAction<boolean>>;
 }
 
 export function createMultiformContext<T = any>() {
@@ -51,6 +54,7 @@ const Multiform: React.FC<MultiformProps> = ({
   const slideAnimation = useRef(useValue(0)).current;
 
   const [currentStep, setCurrentStep] = useState(1);
+  const [imageShown, setImageShown] = useState(true);
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -111,22 +115,40 @@ const Multiform: React.FC<MultiformProps> = ({
         previousStep,
         data,
         setData,
+        imageShown,
+        setImageShown,
       }}
     >
-      <Container>
-        <Header title={headerTitle} onBackPress={previousStep} />
-        <ComponentsContainer
-          size={totalSteps}
-          /**
-         //@ts-ignore */
-          style={{ transform: [{ translateX: slideAnimation }] }}
-        >
-          {subComponents.map((component, index) => {
-            return <Page key={index} content={component} />;
-          })}
-        </ComponentsContainer>
-        <ProgressBar style={{ width: growAnimation }} />
-      </Container>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{ flex: 1 }}
+        // onKeyboardDidShow={() => {
+        //   console.log("Vai aparecer");
+        //   // setTimeout(() => {
+        //   setImageShown(false);
+        //   // }, 1000);
+        // }}
+        // onKeyboardDidHide={() => {
+        //   console.log("Vai esconder");
+        //   // setTimeout(() => {
+        //   setImageShown(true);
+        //   // }, 1000);
+        // }}
+      >
+        <Container style={{ backgroundColor: "blue" }}>
+          <Header title={headerTitle} onBackPress={previousStep} />
+          <ComponentsContainer
+            size={totalSteps}
+            /**
+             //@ts-ignore */
+            style={{ transform: [{ translateX: slideAnimation }] }}
+          >
+            {subComponents.map((component, index) => {
+              return <Page key={index} content={component} />;
+            })}
+          </ComponentsContainer>
+          {/* <ProgressBar style={{ width: growAnimation }} /> */}
+        </Container>
+      </KeyboardAwareScrollView>
     </MultiformContext.Provider>
   );
 };

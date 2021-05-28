@@ -33,7 +33,6 @@ export const Title = styled.Text<{ disabled?: boolean }>`
 
 export const IconContainer = styled.View`
   display: flex;
-  background: red;
 `;
 
 export const Content = styled.View`

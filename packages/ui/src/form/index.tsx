@@ -7,6 +7,8 @@ import PrimaryButton from "../buttons/primary";
 
 import { ButtonContainer, Container, InputsContainer } from "./styles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useMultiform } from "../multiform";
+import { RegisterForm } from "../../../ae-deliver/src/screens/Register";
 
 interface Field {
   initialValue: string;
@@ -35,6 +37,7 @@ interface FormProps {
   onSubmit: (values: any) => any | Promise<any>;
   button: ButtonProps;
   beforeSubmit?: () => Promise<BeforeSubmit | void>;
+  setImageShown?: any;
 }
 
 const Form: React.FC<FormProps> = ({
@@ -43,6 +46,7 @@ const Form: React.FC<FormProps> = ({
   fields,
   button,
   beforeSubmit,
+  setImageShown,
 }) => {
   const [loading, setLoading] = useState(false);
 
@@ -85,28 +89,33 @@ const Form: React.FC<FormProps> = ({
 
   return (
     <Container>
-      <KeyboardAwareScrollView>
-        <InputsContainer>
-          {fields.map((field, index) => {
-            return (
-              <Input
-                isPassword={field.isPassword}
-                label={field.placeholder}
-                key={index}
-                onChangeText={handleChange(field.name)}
-                onBlur={handleBlur(field.name)}
-                onFocus={() => {}}
-                value={values[field.name]}
-                type="custom"
-                error={touched[field.name] && errors[field.name]}
-                options={{ mask: field.mask ?? repeat("*", 255) }}
-                keyboardType={field.type}
-                maxLength={field.maxLenght}
-              />
-            );
-          })}
-        </InputsContainer>
-      </KeyboardAwareScrollView>
+      {/* <KeyboardAwareScrollView> */}
+      <InputsContainer>
+        {fields.map((field, index) => {
+          return (
+            <Input
+              isPassword={field.isPassword}
+              label={field.placeholder}
+              key={index}
+              onChangeText={handleChange(field.name)}
+              onBlur={() => {
+                setImageShown(true);
+                handleBlur(field.name);
+              }}
+              onFocus={() => {
+                setImageShown(false);
+              }}
+              value={values[field.name]}
+              type="custom"
+              error={touched[field.name] && errors[field.name]}
+              options={{ mask: field.mask ?? repeat("*", 255) }}
+              keyboardType={field.type}
+              maxLength={field.maxLenght}
+            />
+          );
+        })}
+      </InputsContainer>
+      {/* </KeyboardAwareScrollView> */}
       <ButtonContainer>
         <PrimaryButton
           isDisabled={

@@ -7,6 +7,7 @@ import Sign from "@screens/Sign/index";
 import { useSignContext } from "@contexts/SignContext";
 import Register from "@screens/Register/index";
 import SignIn from "@screens/SignIn";
+import Test from "@screens/Test";
 
 const SignStack = createStackNavigator();
 const SignInStack = createStackNavigator();

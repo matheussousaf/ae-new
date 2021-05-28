@@ -1,4 +1,5 @@
 import React from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { Container } from "./styles";
 
@@ -7,5 +8,5 @@ interface PageProps {
 }
 
 export default function Page({ content }: PageProps) {
-  return <Container>{content}</Container>;
+  return <Container style={{ backgroundColor: "red" }}>{content}</Container>;
 }

@@ -26,9 +26,11 @@ interface ComponentsContainerProps {
   size: number;
 }
 
-export const ComponentsContainer = styled(Animated.View)<ComponentsContainerProps>`
+export const ComponentsContainer = styled(
+  Animated.View
+)<ComponentsContainerProps>`
   flex-direction: row;
-  width: ${props => props.size * 100}%;
+  width: ${(props) => props.size * 100}%;
   flex: 1;
 `;
 
@@ -38,7 +40,7 @@ export const Test = styled.View`
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;  
+  width: 100%;
   height: 20px;
   flex: 1;
   background: blue;

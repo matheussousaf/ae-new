@@ -17,9 +17,8 @@ import { Button, View } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 
 const validationSchema = Yup.object({
-  email: Yup.string()
-    .required("O e-mail é obrigatório.")
-    .email("Insira um e-mail válido."),
+  email: Yup.string().required("O e-mail é obrigatório."),
+  // .email("Insira um e-mail válido."),
 });
 
 const Sign: React.FC = () => {
